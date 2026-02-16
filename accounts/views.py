@@ -59,12 +59,11 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 
 def create_admin(request):
-    if User.objects.filter(username="admin").exists():
-        return HttpResponse("Admin already exists")
+    user, created = User.objects.get_or_create(username="admin")
 
-    User.objects.create_superuser(
-        username="admin",
-        email="admin@gmail.com",
-        password="admin123"
-    )
-    return HttpResponse("Admin created! You can login now.")
+    user.is_staff = True
+    user.is_superuser = True
+    user.set_password("admin123")
+    user.save()
+
+    return HttpResponse("Admin reset successfully")
