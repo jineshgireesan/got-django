@@ -8,18 +8,6 @@ from django.contrib.auth import logout
 from .models import Character
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-
-def create_admin(request):
-    if not User.objects.filter(username='admin').exists():
-        
-        User.objects.create_superuser(
-            username="admin",
-            email="admin@gmail.com",
-            password="admin123"
-        )
-        return HttpResponse("Admin created")
-    return HttpResponse("Admin already exists")
 
 def login_view(request):
     if request.method == 'POST':
@@ -66,3 +54,17 @@ def characters(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+
+def create_admin(request):
+    if User.objects.filter(username="admin").exists():
+        return HttpResponse("Admin already exists")
+
+    User.objects.create_superuser(
+        username="admin",
+        email="admin@gmail.com",
+        password="admin123"
+    )
+    return HttpResponse("Admin created! You can login now.")
