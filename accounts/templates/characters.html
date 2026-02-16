@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>  
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+
+    <title>Characters</title>
+
+    <style>
+        body{
+            font-family: "Cinzel", serif;
+            background:#0f172a;
+            color:white;
+            padding:40px;
+            margin:0;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:40px;
+        }
+
+        h2 {
+            margin: 5px 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:25px;
+        }
+
+        .card{
+            background:#1e293b;
+            border-radius:18px;
+            overflow:hidden;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 20px 30px rgba(0,0,0,0.4);
+        }
+
+        img{
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            object-position: top; 
+        }
+
+        .content{
+            padding:18px;
+        }
+
+        .house{
+            color:#38bdf8;
+            font-weight:600;
+        }
+
+        .status{
+            margin-top:8px;
+            font-size:13px;
+            color:#f87171;
+        }
+
+        /* ---------------- TASKBAR ---------------- */
+        .taskbar {
+            width: 100%;
+            background: #1e293b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .taskbar .logo {
+            font-family: "Cinzel", serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #facc15; /* royal gold */
+        }
+
+        .taskbar .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .taskbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .taskbar .nav-links a.logout {
+            margin-left: 50px; /* separate logout to far right */
+            color: #ef4444;
+        }
+
+        .taskbar .nav-links a:hover {
+            color: #facc15;
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+  <div class="taskbar">
+    <div class="logo">GOT DB</div>
+      <div class="nav-links">
+        <a href="{% url 'login' %}">Home</a>
+        <a href="{% url 'characters' %}">Characters</a>
+        <a href="/admin/">Add Character</a>
+        <a href="{% url 'logout' %}" class="logout">Logout</a>
+      </div>
+  </div>
+
+<h1>Game of Thrones Characters</h1>
+
+<div class="grid">
+    {% for c in characters %}
+        <div class="card">
+          <img src="{{ c.image.url }}" class="character-img">
+          <div class="content">
+                <h2>{{ c.name }}</h2>
+                <div class="house">{{ c.house }}</div>
+                <div class="status">{{ c.status }}</div>
+                <p>{{ c.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

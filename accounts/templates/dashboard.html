@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body{
+            font-family:Poppins,Arial;
+            background:#f4f6fb;
+            text-align:center;
+            padding-top:120px;
+        }
+        .box{
+            background:white;
+            display:inline-block;
+            padding:40px 60px;
+            border-radius:18px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        }
+        a{
+            display:inline-block;
+            margin-top:20px;
+            padding:10px 20px;
+            background:#e74a3b;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Hello {{ request.user.username }} 🎉</h1>
+    <p>You successfully logged in</p>
+    <a href="/logout/">Logout</a>
+</div>
+
+</body>
+</html>
