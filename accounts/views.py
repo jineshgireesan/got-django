@@ -44,6 +44,16 @@ def register_view(request):
 
     return render(request, 'register.html')
 
+def setup_view(request):
+    from django.contrib.auth.models import User
+    User.objects.filter(username='admin').delete()
+    user = User.objects.create_superuser(
+        username='admin',
+        email='admin@admin.com',
+        password='admin123'
+    )
+    return HttpResponse("User created! Login with admin / admin123")
+
 
 
 @login_required
@@ -55,15 +65,3 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-from django.http import HttpResponse
-from django.contrib.auth.models import User
-
-def create_admin(request):
-    user, created = User.objects.get_or_create(username="admin")
-
-    user.is_staff = True
-    user.is_superuser = True
-    user.set_password("admin123")
-    user.save()
-
-    return HttpResponse("Admin reset successfully")
